@@ -147,12 +147,12 @@ function OnboardingPage() {
             <h4 style={{ marginTop: "0px" }}>You are going to split to {numChains} chains</h4>
             <p>Select your chains below and indicate your weights for each. <b>Weights must add up to 100!</b></p>
           </div>
-          
+
           {endChains.map((val, index) => {
             return (
               <Row className="mb-3 d-flex align-items-end" key={index}>
                 <Form.Group as={Col} sm={6}>
-                  <Form.Select name="finalChain" defaultValue="default" onChange={event => setStartChain(event.target.value)}>
+                  <Form.Select name="finalChain" defaultValue="default" onChange={event => handleEndChains(event.target.value, index)}>
                     <option value="default" disabled>Select a Chain</option>
                     <option value="ethereum">Ethereum Goerli</option>
                     <option value="bsc">BSC Testnet</option>
@@ -161,7 +161,7 @@ function OnboardingPage() {
                   </Form.Select>
                 </Form.Group>
                 <Form.Group as={Col}>
-                  <Form.Control type="number" name="distribution" placeholder="100" ></Form.Control>
+                  <Form.Control type="number" name="distribution" placeholder="100" onChange={event => handleEndChainAmounts(event.target.value, index)}></Form.Control>
                 </Form.Group>
               </Row>
             )
