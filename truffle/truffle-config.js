@@ -58,7 +58,7 @@ module.exports = {
 
     // klaytn_testnet
     baobab: {
-      provider: () => new HDWalletProvider(privateKey, `https://public-node-api.klaytnapi.com/v1/baobab`),
+      provider: () => new HDWalletProvider(privateKey, `https://api.baobab.klaytn.net:8651`),
       network_id: 1001,
       gas: 8500000,
       gasPrice: null,

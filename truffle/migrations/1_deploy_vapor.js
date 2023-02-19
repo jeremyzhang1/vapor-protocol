@@ -1,13 +1,9 @@
-const Vapor = artifacts.require("MultiChainSwapUniV2");
+const Vapor = artifacts.require("MultiChainSwapUniV3");
 
 module.exports = async function (deployer, network) {
   if (network == "mumbai") {
-    deployer.deploy(Vapor, "0x000054d3A0Bc83Ec7808F52fCdC28A96c89F6C5c", "0x000080383847bd75f91c168269aa74004877592f", "0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D")
-  } else if (network == "goerli") {
-    console.log("Deploying to goerli")
-    deployer.deploy(Vapor, "0x00007d0BA516a2bA02D77907d3a1348C1187Ae62", "0xCc7bb2D219A0FC08033E130629C2B854b7bA9195", "0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D")
-  } else if (network == "bnb_testnet") {
-    console.log("Deploying to bnb testnet")
-    deployer.deploy(Vapor, "0x000054d3A0Bc83Ec7808F52fCdC28A96c89F6C5c","0x000080383847bd75f91c168269aa74004877592f", "0x9Ac64Cc6e4415144C455BD8E4837Fea55603e5c3")
+    deployer.deploy(Vapor, "0x000054d3A0Bc83Ec7808F52fCdC28A96c89F6C5c", "0x000080383847bd75f91c168269aa74004877592f", "0xE592427A0AEce92De3Edee1F18E0157C05861564", "0xb27308f9F90D607463bb33eA1BeBb41C27CE5AB6", "0x9c3C9283D3e44854697Cd22D3Faa240Cfb032889", 500, 3000)
+  } else if (network == "baobab") {
+    deployer.deploy(Vapor, "0x000054d3A0Bc83Ec7808F52fCdC28A96c89F6C5c", "0x000080383847bD75F91c168269Aa74004877592f", "0x42271971dbF42fbfEaF7F428604a86760300cB5B", "0x42271971dbF42fbfEaF7F428604a86760300cB5B", "0x0339d5Eb6D195Ba90B13ed1BCeAa97EbD198b106", 500, 3000)
   }
 };
