@@ -3,6 +3,7 @@ import MultiChainSwapUniV3 from "../contracts/MultiChainSwapUniV3.json";
 import Web3 from 'web3';
 import downArrow from "../images/downArrow.png"
 import { Form, Button, Col } from "react-bootstrap";
+import "../Onboarding.css"
 
 
 function OnboardingPage() {
@@ -130,7 +131,7 @@ function OnboardingPage() {
   }, []);
 
   return (
-    <div>
+    <div className="onboarding">
       <h1>Fuel Here!</h1>
       <br/>
       <Form>
