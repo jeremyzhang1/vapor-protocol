@@ -40,6 +40,25 @@ function OnboardingPage() {
     }
   }
 
+  const loadUserData2 = async () => {
+    const web3 = window.web3;
+
+    // TODO: figure out how to deal with getting the correct lockbox onto the frontend in a more user friendly way
+    try {
+      let accounts = await web3.eth.getAccounts().then();
+      setAddress(accounts[0]);
+      // console.log(accounts[0]);
+      const instance = new web3.eth.Contract(MultiChainSwapUniV3.abi, "0xe5b8D677992f7db7503C2af504C5AA741004F5F2");
+      console.log("loaded")
+      await instance.methods.setInteractorByChainId(80001, web3.utils.keccak256("0xe5b8D677992f7db7503C2af504C5AA741004F5F2")).send({ from: accounts[0]});
+      console.log("check")
+    }
+    catch (error) {
+      console.log(error)
+      window.alert('Invalid Lockbox contract address.');
+    }
+  }
+
 
   const loadMetaMask = async () => {
     const web3 = window.web3;
@@ -62,7 +81,8 @@ function OnboardingPage() {
   return (
     <div>
 
-      <button onClick={loadUserData}>Click this!</button>
+      <button onClick={loadUserData}>Click this if on Mumbai!</button>
+      <button onClick={loadUserData2}>Click this is on Baobab!</button>
       <h1>Placeholder Onboarding Page</h1>
     </div>
   )
