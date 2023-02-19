@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import LandingPage from './pages/LandingPage'
 import AppPage from './pages/AppPage'
 import OnboardingPage from './pages/OnboardingPage';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 const App = () => {
   return (

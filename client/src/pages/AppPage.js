@@ -86,12 +86,8 @@ function AppPage() {
 
   return (
     <div className="onboarding">
-      <div
-        className="sidebar-background"
-        style={{ width: "40%", margin: "auto", marginTop: "4rem" }}
-      >
-        <h1>Debugging Utilities Page</h1>
-      </div>
+      <br/>
+      <h1 style={{color: "white"}}>Debugging Utilities Page</h1>
       <div className="sidebar-background" style={{ width: "40%", margin: "auto", marginTop: "4rem" }}>
         <h3>Utilities to establish cross chain address links:</h3>
         <button onClick={loadUserData}>Click this if on Mumbai!</button>

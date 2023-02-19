@@ -46,7 +46,7 @@ function OnboardingPage() {
     }
     setEndChains(temp);
   }
-  
+
   const submitChains = () => {
 
   }
@@ -59,9 +59,15 @@ function OnboardingPage() {
 
   return (
     <div className="onboarding">
-      <h1>Fuel Here!</h1>
       <br/>
-      <Form>
+      <br/>
+      <h1 style={{color: "white"}}>Fuel Here!</h1>
+      <br />
+      <div
+        className="sidebar-background"
+        style={{ width: "40%", margin: "auto", marginTop: "1rem" }}
+      >
+        <Form>
           <Row>
             <Form.Group as={Col}>
               <Form.Label>What chain would you like to start from?</Form.Label>
@@ -79,67 +85,46 @@ function OnboardingPage() {
             </Form.Group>
           </Row>
 
-          <img style={{ width: 50, height: 50 }} src={downArrow}></img>
-
+          <img style={{ width: 50, height: 50 }} src={downArrow} />
           {
             numChains == 0 ?
-            <Form.Group>
-              <Form.Label>How many chains would you like to split too?</Form.Label>
-              <Form.Control type="number" step="1" min="1" max="3" onChange={event => handleNumChains(event)} />
-            </Form.Group>
-            :
-            <div>
-              <h4>You are going to split to <b>{numChains} chains</b></h4>
-              <br/>
-              <h4>Select your chains below and indicate your weights for each (weights must add up to 100!)</h4>
-              <br/>
-  
-            </div>
+              <Form.Group>
+                <Form.Label>How many chains would you like to split too?</Form.Label>
+                <Form.Control type="number" step="1" min="1" max="3" onChange={event => handleNumChains(event)} />
+              </Form.Group>
+              :
+              <div>
+                <h4 style={{ marginTop: "0px" }}>You are going to split to {numChains} chains</h4>
+                <p>Select your chains below and indicate your weights for each. <b>Weights must add up to 100!</b></p>
+              </div>
           }
-        {endChains.map((val, index) => {
-          return (
-            <Row className="mb-3 d-flex align-items-end" key={index}>
-              <Form.Group as={Col} sm={6}>
-                <Form.Select name="finalChain" defaultValue="default" onChange={event => setStartChain(event.target.value)}>
-                  <option value="default" disabled>Select a Chain</option>
-                  <option value="ethereum">Ethereum Goerli</option>
-                  <option value="bsc">BSC Testnet</option>
-                  <option value="klaytn">Klaytn Baobab</option>
-                  <option value="polygon">Polygon Mumbai</option>
-                </Form.Select>
-              </Form.Group>
-              <Form.Group as={Col}>
-                <Form.Control type="number" name="distribution" placeholder="100" ></Form.Control>
-              </Form.Group>
-            </Row>
-          )
+          {endChains.map((val, index) => {
+            return (
+              <Row className="mb-3 d-flex align-items-end" key={index}>
+                <Form.Group as={Col} sm={6}>
+                  <Form.Select name="finalChain" defaultValue="default" onChange={event => setStartChain(event.target.value)}>
+                    <option value="default" disabled>Select a Chain</option>
+                    <option value="ethereum">Ethereum Goerli</option>
+                    <option value="bsc">BSC Testnet</option>
+                    <option value="klaytn">Klaytn Baobab</option>
+                    <option value="polygon">Polygon Mumbai</option>
+                  </Form.Select>
+                </Form.Group>
+                <Form.Group as={Col}>
+                  <Form.Control type="number" name="distribution" placeholder="100" ></Form.Control>
+                </Form.Group>
+              </Row>
+            )
 
-        })}
-
+          })}
+          <br/>
           <Button variant="dark" onClick={submitChains}>
             Send Gas
           </Button>
-      </Form>
-      <br/>
-      <br/>
-      <br/>
-      <br/>
-      <br/>
-      {
-        numChains == 0 ?
-        <form>
-          <label>How many chains would you like to split too?</label>
-          <input type="number" step="1" min="1" max="3" onChange={event => handleNumChains(event)}></input>
-        </form>
-        :
-        <div>
-          <h4>You are going to split to <b>{numChains} chains</b></h4>
-          <br/>
-          <h4>Select your chains below and indicate your weights for each (weights must add up to 100!)</h4>
-          <br/>
-
-        </div>
-      }
+        </Form>
+      </div>
+      <br />
+      <br />
     </div>
   )
 }

@@ -1,6 +1,9 @@
 .onboarding {
-    background-color: rgb(20, 26, 42);
+    background: rgb(20, 26, 42) no-repeat center center fixed;
     text-align: center;
+    background-size: cover;
+    min-height: 100vh;
+    overflow: hidden;
 }
 
 .sidebar-background {
