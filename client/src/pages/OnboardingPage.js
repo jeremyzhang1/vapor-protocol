@@ -2,12 +2,14 @@ import React, { useEffect, useState } from 'react';
 import MultiChainSwapUniV3 from "../contracts/MultiChainSwapUniV3.json";
 import Web3 from 'web3';
 import downArrow from "../images/downArrow.png"
-// import { Form } from "react-bootstrap";
+import { Form, Button, Col } from "react-bootstrap";
 
 
 function OnboardingPage() {
   const [address, setAddress] = useState("");
-  const [endChains, setEndChains] = useState(0);
+  const [startChain, setStartChain] = useState("");
+  const [numChains, setNumChains] = useState(0);
+  const [endChains, setEndChains] = useState([]);
 
   const loadWeb3 = async () => {
     // TODO for Charles: window.ethereum.enable is going to be deprecated very soon, look into
@@ -105,8 +107,8 @@ function OnboardingPage() {
   }
   const handleNumChains = (event) => {
     event.preventDefault();
-    setEndChains(event.target.value);
-    console.log(endChains);
+    setNumChains(event.target.value);
+    console.log(numChains);
   }
 
   const handleSwapToken3 = async () => {
@@ -115,6 +117,10 @@ function OnboardingPage() {
     const instance = new web3.eth.Contract(MultiChainSwapUniV3.abi, "0xe5b8D677992f7db7503C2af504C5AA741004F5F2");
     let amount = "0.02"
     await instance.methods.swapETHForTokensCrossChain(web3.utils.keccak256("0x773894804b0AEE6975E3474846Cd5499704bA6BC"), "0x0000000000000000000000000000000000000000", true, 0, 80001, 80000000).send({ from: accounts[0], value: Web3.utils.toWei(amount, "ether") })
+  }
+  
+  const submitChains = () => {
+
   }
 
   useEffect(() => {
@@ -127,15 +133,31 @@ function OnboardingPage() {
     <div>
       <h1>Fuel Here!</h1>
       <br/>
-      <form>
-        <label>Starting Chain</label>
-        <select name="start">
-          <option value="ethereum">Ethereum Goerli</option>
-          <option value="bsc">BSC Testnet</option>
-          <option value="klaytn">Klaytn Baobab</option>
-          <option value="polygon">Polygon Mumbai</option>
-        </select>
-      </form>
+      <Form>
+          <Form.Group as={Col}>
+            <Form.Select name="start" defaultValue="default" onChange={event => setStartChain(event.target.value)}>
+              <option value="default" disabled>Select a Chain</option>
+              <option value="ethereum">Ethereum Goerli</option>
+              <option value="bsc">BSC Testnet</option>
+              <option value="klaytn">Klaytn Baobab</option>
+              <option value="polygon">Polygon Mumbai</option>
+            </Form.Select>
+          </Form.Group>
+
+          {
+            numChains == 0 ?
+            <Form.Group>
+              <Form.Label>How many chains would you like to split too?</Form.Label>
+              <Form.Control type="number" step="1" min="1" max="3" onChange={event => handleNumChains(event)} />
+            </Form.Group>
+            :
+            <div></div>
+          }
+
+          <Form.Group as={Col} controlId="formButton">
+            <Button variant="outline-danger" onClick={() => submitChains}>Remove</Button>
+          </Form.Group>
+      </Form>
       <img style={{ width: 50, height: 50 }} src={downArrow}></img>
       <br/>
       <br/>
@@ -143,16 +165,28 @@ function OnboardingPage() {
       <br/>
       <br/>
       {
-        endChains == 0 ?
+        numChains == 0 ?
         <form>
           <label>How many chains would you like to split too?</label>
           <input type="number" step="1" min="1" max="3" onChange={event => handleNumChains(event)}></input>
         </form>
         :
-        <div/>
+        <div>
+          <h4>You are going to split to <b>{numChains} chains</b></h4>
+          <br/>
+          <h4>Select your chains below and indicate your weights for each (weights must add up to 100!)</h4>
+          <br/>
 
-
+        </div>
       }
+      <br/>
+      <br/>
+      <br/>
+      <br/>
+      <br/>
+      <br/>
+      <br/>
+      <br/>
       <button onClick={loadUserData}>Click this if on Mumbai!</button>
       <button onClick={loadUserData2}>Click this is on Baobab!</button>
       <button onClick={loadUserData3}>Click this if on Goerli!</button>
