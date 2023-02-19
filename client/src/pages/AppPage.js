@@ -86,20 +86,31 @@ function AppPage() {
 
   return (
     <div className="onboarding">
-      <h1>Debugging Utilities Page</h1>
-      <h3>Utilities to establish cross chain address links:</h3>
-      <button onClick={loadUserData}>Click this if on Mumbai!</button>
-      <br />
-      <button onClick={loadUserData2}>Click this is on Baobab!</button>
-      <br />
-      <button onClick={loadUserData3}>Click this if on Goerli!</button>
-      <br />
-      <h3>Test swaps to various chains:</h3>
-      <button onClick={handleSwapToken}>Click to test swap, must be on matic</button>
-      <br />
-      <button onClick={handleSwapToken2}>Click to test swap, must be on Baobab</button>
-      <br />
-      <button onClick={handleSwapToken3}>Click to test swap Goerli to polygon</button>
+      <div
+        className="sidebar-background"
+        style={{ width: "40%", margin: "auto", marginTop: "4rem" }}
+      >
+        <h1>Debugging Utilities Page</h1>
+      </div>
+      <div className="sidebar-background" style={{ width: "40%", margin: "auto", marginTop: "4rem" }}>
+        <h3>Utilities to establish cross chain address links:</h3>
+        <button onClick={loadUserData}>Click this if on Mumbai!</button>
+        <br />
+        <button onClick={loadUserData2}>Click this is on Baobab!</button>
+        <br />
+        <button onClick={loadUserData3}>Click this if on Goerli!</button>
+      </div>
+      <div
+        className="sidebar-background"
+        style={{ width: "40%", margin: "auto", marginTop: "4rem" }}
+      >
+        <h3>Test swaps to various chains:</h3>
+        <button onClick={handleSwapToken}>Click to test swap, must be on matic</button>
+        <br />
+        <button onClick={handleSwapToken2}>Click to test swap, must be on Baobab</button>
+        <br />
+        <button onClick={handleSwapToken3}>Click to test swap Goerli to polygon</button>
+      </div>
     </div>
   )
 }
