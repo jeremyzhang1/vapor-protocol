@@ -143,6 +143,7 @@ function OnboardingPage() {
             <Form.Label>How many chains would you like to split too?</Form.Label>
             <Form.Control type="number" step="1" min="1" max="3" onChange={event => handleNumChains(event)} />
           </Form.Group>
+          <br/>
           <div>
             <h4 style={{ marginTop: "0px" }}>You are going to split to {numChains} chains</h4>
             <p>Select your chains below and indicate your weights for each. <b>Weights must add up to 100!</b></p>
