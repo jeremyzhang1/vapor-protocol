@@ -1,25 +1,24 @@
-import { EthProvider } from "./contexts/EthContext";
-import Intro from "./components/Intro/";
-import Setup from "./components/Setup";
-import Demo from "./components/Demo";
-import Footer from "./components/Footer";
-import "./App.css";
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import LandingPage from './pages/LandingPage'
+import AppPage from './pages/AppPage'
+import OnboardingPage from './pages/OnboardingPage';
 
-function App() {
+const App = () => {
   return (
-    <EthProvider>
-      <div id="App" >
-        <div className="container">
-          <Intro />
-          <hr />
-          <Setup />
-          <hr />
-          <Demo />
-          <hr />
-          <Footer />
-        </div>
-      </div>
-    </EthProvider>
+    <Router>
+      <Routes>
+        <Route path="/onboarding" element={
+          <OnboardingPage />
+        } />
+        <Route path="/app" element={
+          <AppPage />
+        } />
+        <Route path="/" element={
+          <LandingPage />
+        } />
+      </Routes>
+    </Router>
   );
 }
 
