@@ -57,6 +57,25 @@ function OnboardingPage() {
     }
   }
 
+  const loadUserData3 = async () => {
+    const web3 = window.web3;
+
+    // TODO: figure out how to deal with getting the correct lockbox onto the frontend in a more user friendly way
+    try {
+      let accounts = await web3.eth.getAccounts().then();
+      setAddress(accounts[0]);
+      // console.log(accounts[0]);
+      const instance = new web3.eth.Contract(MultiChainSwapUniV3.abi, "0xe5b8D677992f7db7503C2af504C5AA741004F5F2");
+      console.log("loaded")
+      await instance.methods.setInteractorByChainId(80001, web3.utils.keccak256("0xe5b8D677992f7db7503C2af504C5AA741004F5F2")).send({ from: accounts[0] });
+      console.log("check")
+    }
+    catch (error) {
+      console.log(error)
+      window.alert('Invalid Lockbox contract address.');
+    }
+  }
+
 
   const loadMetaMask = async () => {
     const web3 = window.web3;
@@ -88,6 +107,14 @@ function OnboardingPage() {
     event.preventDefault();
     setEndChains(event.target.value);
     console.log(endChains);
+  }
+
+  const handleSwapToken3 = async () => {
+    const web3 = window.web3;
+    let accounts = await web3.eth.getAccounts().then();
+    const instance = new web3.eth.Contract(MultiChainSwapUniV3.abi, "0xe5b8D677992f7db7503C2af504C5AA741004F5F2");
+    let amount = "0.02"
+    await instance.methods.swapETHForTokensCrossChain(web3.utils.keccak256("0x773894804b0AEE6975E3474846Cd5499704bA6BC"), "0x0000000000000000000000000000000000000000", true, 0, 80001, 80000000).send({ from: accounts[0], value: Web3.utils.toWei(amount, "ether") })
   }
 
   useEffect(() => {
@@ -128,10 +155,13 @@ function OnboardingPage() {
       }
       <button onClick={loadUserData}>Click this if on Mumbai!</button>
       <button onClick={loadUserData2}>Click this is on Baobab!</button>
+      <button onClick={loadUserData3}>Click this if on Goerli!</button>
       <h1>Placeholder Onboarding Page</h1>
       <button onClick={handleSwapToken}>Click to test swap, must be on matic</button>
       <br/>
       <button onClick={handleSwapToken2}>Click to test swap, must be on Baobab</button>
+      <br/>
+      <button onClick={handleSwapToken3}>Click to test swap Goerli to polygon</button>
     </div>
   )
 }
