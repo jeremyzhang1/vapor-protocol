@@ -138,18 +138,16 @@ function OnboardingPage() {
           </Row>
 
           <img style={{ width: 50, height: 50 }} src={downArrow} />
-          {
-            numChains == 0 ?
-              <Form.Group>
-                <Form.Label>How many chains would you like to split too?</Form.Label>
-                <Form.Control type="number" step="1" min="1" max="3" onChange={event => handleNumChains(event)} />
-              </Form.Group>
-              :
-              <div>
-                <h4 style={{ marginTop: "0px" }}>You are going to split to {numChains} chains</h4>
-                <p>Select your chains below and indicate your weights for each. <b>Weights must add up to 100!</b></p>
-              </div>
-          }
+
+          <Form.Group>
+            <Form.Label>How many chains would you like to split too?</Form.Label>
+            <Form.Control type="number" step="1" min="1" max="3" onChange={event => handleNumChains(event)} />
+          </Form.Group>
+          <div>
+            <h4 style={{ marginTop: "0px" }}>You are going to split to {numChains} chains</h4>
+            <p>Select your chains below and indicate your weights for each. <b>Weights must add up to 100!</b></p>
+          </div>
+          
           {endChains.map((val, index) => {
             return (
               <Row className="mb-3 d-flex align-items-end" key={index}>
