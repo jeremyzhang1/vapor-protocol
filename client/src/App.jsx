@@ -8,13 +8,13 @@ const App = () => {
   return (
     <Router>
       <Routes>
-        <Route path="/onboarding" element={
+        <Route path="/" element={
           <OnboardingPage />
         } />
         <Route path="/app" element={
           <AppPage />
         } />
-        <Route path="/" element={
+        <Route path="/landing" element={
           <LandingPage />
         } />
       </Routes>
