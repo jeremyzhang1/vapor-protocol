@@ -20,6 +20,19 @@ function AppPage() {
       window.alert('Something went wrong! Check the console for more details.');
     }
   }
+  const polygonConnectGoerli = async () => {
+    const web3 = window.web3;
+    try {
+      let accounts = await web3.eth.getAccounts().then();
+      setAddress(accounts[0]);
+      const instance = new web3.eth.Contract(MultiChainSwapUniV3.abi, "0xe5b8D677992f7db7503C2af504C5AA741004F5F2");
+      await instance.methods.setInteractorByChainId(5, web3.utils.keccak256("0xe5b8D677992f7db7503C2af504C5AA741004F5F2")).send({ from: accounts[0] });
+    }
+    catch (error) {
+      console.log(error)
+      window.alert('Something went wrong! Check the console for more details.');
+    }
+  }
 
   const loadUserData2 = async () => {
     const web3 = window.web3;
@@ -119,7 +132,9 @@ function AppPage() {
       <h1 style={{color: "white"}}>Debugging Utilities Page</h1>
       <div className="sidebar-background" style={{ width: "40%", margin: "auto", marginTop: "4rem" }}>
         <h3>Utilities to establish cross chain address links:</h3>
-        <button onClick={loadUserData}>Click this if on Mumbai!</button>
+        <button onClick={loadUserData}>Click this if on Mumbai to connect to Klaytn!</button>
+        <br />
+        <button onClick={polygonConnectGoerli}>Click this if on Mumbai to connect to Goerli!</button>
         <br />
         <button onClick={loadUserData2}>Click this is on Baobab!</button>
         <br />
