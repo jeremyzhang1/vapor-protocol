@@ -84,6 +84,35 @@ function AppPage() {
     await instance.methods.swapETHForTokensCrossChain(web3.utils.keccak256("0x773894804b0AEE6975E3474846Cd5499704bA6BC"), "0x0000000000000000000000000000000000000000", true, 0, 80001, 80000000).send({ from: accounts[0], value: Web3.utils.toWei(amount, "ether") })
   }
 
+  const loadMetaMask = async () => {
+    const web3 = window.web3;
+    // find the metamask account
+    let accounts = await web3.eth.getAccounts().then();
+    setAddress(accounts[0].toString());
+    console.log(accounts[0].toString());
+  }
+
+  const loadWeb3 = async () => {
+    // TODO for Charles: window.ethereum.enable is going to be deprecated very soon, look into
+    // fix laid out here: https://docs.metamask.io/guide/ethereum-provider.html#ethereum-provider-api
+    if (window.ethereum) {
+      window.web3 = new Web3(window.ethereum)
+      await window.ethereum.enable();
+    }
+    else if (window.web3) {
+      window.web3 = new Web3(window.web3.currentProvider);
+    }
+    else {
+      window.alert('Non-Ethereum browser detected. You should consider trying MetaMask!');
+    }
+  }
+
+  useEffect(() => {
+    loadWeb3();
+    loadMetaMask();
+    // loadUserData();
+  }, []);
+
   return (
     <div className="onboarding">
       <br/>
