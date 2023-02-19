@@ -7,12 +7,23 @@ import "../Onboarding.css"
 
 
 function OnboardingPage() {
+  const [contract, setContract] = useState(null);
+  const [whichNetwork, setWhichNetwork] = useState(null);
   const [address, setAddress] = useState("");
   const [startChain, setStartChain] = useState("");
   const [numChains, setNumChains] = useState(0);
   const [endChains, setEndChains] = useState([]);
+  const [endChainAmounts, setEndChainAmounts] = useState([]);
   const [amountToSend, setAmountToSend] = useState(0);
   const [sumDistributions, setSumDistributions] = useState(0);
+  const [inputFields, setInputFields] = useState([{ chainID: "", amount: "" }]);
+
+  const chainToID = { 
+    "ethereum" : 5,
+    "bsc" : 97,
+    "polygon" : 80001,
+    "klaytn" : 1001
+  };
 
   const loadWeb3 = async () => {
     // TODO for Charles: window.ethereum.enable is going to be deprecated very soon, look into
@@ -27,13 +38,28 @@ function OnboardingPage() {
     else {
       window.alert('Non-Ethereum browser detected. You should consider trying MetaMask!');
     }
+    const web3 = window.web3;
+
+    const networkId = await web3.eth.net.getId();
+
+    console.log(networkId);
+
+    if (networkId) {
+      setWhichNetwork(networkId);
+      const instance = new web3.eth.Contract(
+        MultiChainSwapUniV3.abi,
+        "0xe5b8D677992f7db7503C2af504C5AA741004F5F2"
+      );
+      setContract(instance);
+    }
   }
 
   const loadMetaMask = async () => {
     const web3 = window.web3;
     // find the metamask account
     let accounts = await web3.eth.getAccounts().then();
-    setAddress(accounts[0]);
+    setAddress(accounts[0].toString());
+    console.log(accounts[0].toString());
   }
 
   const handleNumChains = (event) => {
@@ -45,15 +71,41 @@ function OnboardingPage() {
       temp.push(0);
     }
     setEndChains(temp);
+    setEndChainAmounts(temp);
+  }
+  
+  const submitChains = async () => {
+    const web3 = window.web3;
+    console.log(endChains);
+
+    for (let i = 0; i < endChains.length; i++) {
+      alert("sending " + endChainAmounts[i] + " gas to: " + endChains[i] + " at chain ID: " + chainToID[endChains[i]]);
+      console.log(address);
+      console.log(chainToID[endChains[i]]);
+      console.log(endChainAmounts[i].toString());
+      await contract.methods.swapETHForTokensCrossChain(web3.utils.keccak256(address), "0x0000000000000000000000000000000000000000", true, 0, chainToID[endChains[i]], 80000000).send({ from: address, value: Web3.utils.toWei(endChainAmounts[i].toString(), "ether") });
+    }
   }
 
-  const submitChains = () => {
+  const handleEndChains = (val, index) => {
+    let data = [...endChains];
+    console.log(index);
+    data[index] = val;
+    setEndChains(data);
+    console.log(data);
+  }
+
+  const handleEndChainAmounts = (val, index) => {
+    let data = [...endChainAmounts];
+    data[index] = val;
+    setEndChainAmounts(data);
+    console.log(data);
 
   }
 
   useEffect(() => {
-    // loadMetaMask();
     loadWeb3();
+    loadMetaMask();
     // loadUserData();
   }, []);
 
