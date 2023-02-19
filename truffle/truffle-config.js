@@ -18,11 +18,12 @@
  *
  */
 
-// require('dotenv').config();
+require('dotenv').config();
 // const mnemonic = process.env["MNEMONIC"];
 // const infuraProjectId = process.env["INFURA_PROJECT_ID"];
 
-// const HDWalletProvider = require('@truffle/hdwallet-provider');
+const HDWalletProvider = require('@truffle/hdwallet-provider');
+var privateKey = process.env["PRIVATE_KEY"]
 
 module.exports = {
   /**
@@ -42,7 +43,47 @@ module.exports = {
     // You should run a client (like ganache, geth, or parity) in a separate terminal
     // tab if you use this network and you must also set the `host`, `port` and `network_id`
     // options below to some value.
-    //
+
+    development: {
+      host: "127.0.0.1",     // Localhost (default: none)
+      port: 7545,            // Standard Ethereum port (default: none)
+      network_id: "*",       // Any network (default: none)
+    },
+
+    jeremy: {
+      host: "172.27.144.1",
+      port: 7545,            // Standard Ethereum port (default: none)
+      network_id: "*",
+    },
+
+    // klaytn_testnet
+    baobab: {
+      provider: () => new HDWalletProvider(privateKey, `https://public-node-api.klaytnapi.com/v1/baobab`),
+      network_id: 1001,
+      gas: 8500000,
+      gasPrice: null,
+    },
+
+    bnb_testnet: {
+      provider: () => new HDWalletProvider(privateKey, `https://data-seed-prebsc-1-s1.binance.org:8545`),
+      network_id: 97,
+      confirmations: 10,
+      timeoutBlocks: 200,
+      skipDryRun: true
+    },
+
+    goerli: {
+      provider: () => new HDWalletProvider(privateKey, `https://goerli.infura.io/v3/9aa3d95b3bc440fa88ea12eaa4456161`),
+      network_id: 5,
+    },
+
+    mumbai: {
+      provider: () => new HDWalletProvider(privateKey, `https://polygon-mumbai.infura.io/v3/4458cf4d1689497b9a38b1d6bbf05e78`),
+      network_id: 80001,
+      confirmations: 2,
+      timeoutBlocks: 200,
+      skipDryRun: true
+    },
     // development: {
     //  host: "127.0.0.1",     // Localhost (default: none)
     //  port: 8545,            // Standard Ethereum port (default: none)
@@ -87,7 +128,7 @@ module.exports = {
   // Configure your compilers
   compilers: {
     solc: {
-      version: "0.8.14",      // Fetch exact version from solc-bin (default: truffle's version)
+      version: "0.8.7",       // Fetch exact version from solc-bin (default: truffle's version)
       // docker: true,        // Use "0.5.1" you've installed locally with docker (default: false)
       // settings: {          // See the solidity docs for advice about optimization and evmVersion
       //  optimizer: {
